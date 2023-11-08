@@ -1,15 +1,20 @@
 
 #areaSvgWorkZone{
-    margin: 30px 30px 30px 50px;
+    position: relative;
+    top:45px;
+    left:45px
 }
 /* dropdow menu main */
 .dropbtn {
+    position: absolute;
     background-color: #3498DB;
+    top:10px;
     color: white;
     padding: 16px;
     font-size: 16px;
     border: none;
     cursor: pointer;
+    height: 40px;
   }
   
   .dropbtn:hover, .dropbtn:focus {
@@ -21,6 +26,7 @@
     position: absolute;
     background-color: #f1f1f1;
     min-width: 160px;
+    top: 50px;
     overflow: auto;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
@@ -43,43 +49,22 @@
     position: absolute;
     display: flex;
     background: rgb(192, 192, 192);
-    top:100px;
+    top:51px;
     flex-direction: column;
 }
-
-#inpCreateLine{
-    content: '';
-    background: none;
-    background-image: url('./svgExtensions/images/pen.svg');
-    width: 40px;
-    height: 40px;
-}
-
-#inpCreateCircle{
-    content: '';
-    background: none;
-    background-image: url('./svgExtensions/images/circle.svg');
-    width: 40px;
-    height: 40px;
-}
-
-#inpCreateSquare{
-    content: '';
-    background: none;
-    background-image: url('./svgExtensions/images/square.svg');
-    width: 40px;
-    height: 40px;
-}
-
-#inpEraseLine{
+.style-button-menu-svg{
   content: '';
   background: none;
-  background-image: url('./svgExtensions/images/eraser.svg');
   width: 40px;
   height: 40px;
 }
+#inpCursor{background-image: url('./svgExtensions/images/cursor.svg');}
+#inpCreateLine{background-image: url('./svgExtensions/images/pen.svg');}
+#inpCreateCircle{background-image: url('./svgExtensions/images/circle.svg');}
+#inpCreateSquare{background-image: url('./svgExtensions/images/square.svg');}
+#inpEraseLine{background-image: url('./svgExtensions/images/eraser.svg');}
 
-#inpCreateLine:hover, #inpCreateCircle:hover, #inpCreateSquare:hover{
+.style-button-menu-svg:hover{
     border: 1px;
 }
 
@@ -88,7 +73,9 @@
   background: rgb(192, 192, 192);
   position: absolute;
   top:10px;
-  left:150px;
+  left:143px;
+  height: 40px;
+
 }
 
 input[type='color']{

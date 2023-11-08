@@ -69,23 +69,28 @@ function Menu(){
     let divCreateElementsSvg = document.createElement('div');
     divCreateElementsSvg.id ='svg-crud-menu-elements';
 
+    const buttonCursor = document.createElement("input");
+    buttonCursor.type = "button";
+    buttonCursor.id = "inpCursor";
+    buttonCursor.classList ="style-button-menu-svg"
+
     const buttonLine = document.createElement("input");
     buttonLine.type = "button";
     buttonLine.id = "inpCreateLine";
-   
+    buttonLine.classList ="style-button-menu-svg"
     const buttonCircle = document.createElement("input");
     buttonCircle.type = "button";
     buttonCircle.id = "inpCreateCircle";
-
+    buttonCircle.classList ="style-button-menu-svg"
     const buttonsQuare = document.createElement("input");
     buttonsQuare.type = "button";
     buttonsQuare.id = "inpCreateSquare";
-
+    buttonsQuare.classList ="style-button-menu-svg"
     const buttonErase = document.createElement("input");
     buttonErase.type = "button";
     buttonErase.id = "inpEraseLine";
-
-    componentMenuElements.push(buttonLine, buttonCircle, 
+    buttonErase.classList ="style-button-menu-svg"
+    componentMenuElements.push(buttonCursor,buttonLine, buttonCircle, 
         buttonsQuare, buttonErase)
     componentMenuElements.forEach(element =>{
         divCreateElementsSvg.appendChild(element)
