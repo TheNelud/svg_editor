@@ -1,0 +1,114 @@
+
+#areaSvgWorkZone{
+    margin: 30px 30px 30px 50px;
+}
+/* dropdow menu main */
+.dropbtn {
+    background-color: #3498DB;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .dropbtn:hover, .dropbtn:focus {
+    background-color: #2980B9;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+ .styleSelectMenuSVG{
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+   
+  }
+  .styleSelectMenuSVG:hover{background-color: #ddd;}
+
+  .show {display: block;}
+
+/* __________________________eleemt create menu */
+
+#svg-crud-menu-elements{
+    position: absolute;
+    display: flex;
+    background: rgb(192, 192, 192);
+    top:100px;
+    flex-direction: column;
+}
+
+#inpCreateLine{
+    content: '';
+    background: none;
+    background-image: url('./svgExtensions/images/pen.svg');
+    width: 40px;
+    height: 40px;
+}
+
+#inpCreateCircle{
+    content: '';
+    background: none;
+    background-image: url('./svgExtensions/images/circle.svg');
+    width: 40px;
+    height: 40px;
+}
+
+#inpCreateSquare{
+    content: '';
+    background: none;
+    background-image: url('./svgExtensions/images/square.svg');
+    width: 40px;
+    height: 40px;
+}
+
+#inpEraseLine{
+  content: '';
+  background: none;
+  background-image: url('./svgExtensions/images/eraser.svg');
+  width: 40px;
+  height: 40px;
+}
+
+#inpCreateLine:hover, #inpCreateCircle:hover, #inpCreateSquare:hover{
+    border: 1px;
+}
+
+/* _____eDIt Menu____ */
+.editmenu-svg{
+  background: rgb(192, 192, 192);
+  position: absolute;
+  top:10px;
+  left:150px;
+}
+
+input[type='color']{
+  -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: transparent;
+    width: 40px;
+    height: 30px;
+    border: none;
+    cursor: pointer;
+}
+input[type="range"] {
+  width: 100px;
+}
+input[type="color"]::-webkit-color-swatch {
+  border-radius: 8px;
+  border: 3px solid #000000;
+}
+input[type="color"]::moz-color-swatch {
+  border-radius: 8px;
+  border: 3px solid #000000;
+}
