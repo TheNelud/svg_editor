@@ -132,8 +132,62 @@ function Menu(){
         div_editmenu.appendChild(element)
     })
 
+    // _____________ Setting Elements ________________________
+    let arrSettingElem = []
+    let divSettingElement = document.createElement('div')
+    divSettingElement.id = 'setting-elem-svg'
+
+    let lblIdElem = document.createElement('label')
+    lblIdElem.id = 'lblID'
+    lblIdElem.textContent = 'id '
+    let inpIdElem = document.createElement('input')
+    inpIdElem.type = "text"
+    inpIdElem.id = 'inpID'
+    
+
+    let lblX1Elem = document.createElement('label')
+    lblX1Elem.id = 'lblX1'
+    lblX1Elem.textContent = 'x1 '
+    let inpX1Elem = document.createElement('input')
+    inpX1Elem.type = "number"
+    inpX1Elem.id = 'inpX1'
+
+    let lblY1Elem = document.createElement('label')
+    lblY1Elem.id = 'lblY1'
+    lblY1Elem.textContent = 'y1 '
+    let inpY1Elem = document.createElement('input')
+    inpY1Elem.type = "number"
+    inpY1Elem.id = 'inpY1'
+
+    let lblX2Elem = document.createElement('label')
+    lblX2Elem.id = 'lblX2'
+    lblX2Elem.textContent = 'x2 '
+    let inpX2Elem = document.createElement('input')
+    inpX2Elem.type = "number"
+    inpX2Elem.id = 'inpX2'
+
+    let lblY2Elem = document.createElement('label')
+    lblY2Elem.id = 'lblY2'
+    lblY2Elem.textContent = 'y2 '
+    let inpY2Elem = document.createElement('input')
+    inpY2Elem.type = "number"
+    inpY2Elem.id = 'inpY2'
+
+    arrSettingElem.push(
+        lblIdElem,inpIdElem,
+        lblX1Elem,inpX1Elem,
+        lblY1Elem,inpY1Elem,
+        lblX2Elem,inpX2Elem,
+        lblY2Elem,inpY2Elem
+    )
+    arrSettingElem.forEach((element)=>{
+        divSettingElement.appendChild(element)
+    })
+
+
+
     // ___________________________________________________________
-    componentMenu.push(div_dropdowmenu, divCreateElementsSvg, div_editmenu)
+    componentMenu.push(divSettingElement,div_dropdowmenu, divCreateElementsSvg, div_editmenu)
 
     componentMenu.forEach(element => {
         divMenuSvg.appendChild(element)
