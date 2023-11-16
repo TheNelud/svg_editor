@@ -3,7 +3,7 @@ function Menu(){
     let componentMenu = []
 
     let divMenuSvg = document.createElement('div');
-    divMenuSvg.id ='svg-crud-menu';
+    divMenuSvg.id ='svg-menu';
     // ______________Select Menu__________________________
     let arrSelectMenu = []
     let div_dropdowmenu = document.createElement('div');
@@ -52,7 +52,7 @@ function Menu(){
     buttonExport.classList="btnExportSvg"
     buttonExport.classList.add("styleSelectMenuSVG");
 
-    arrSelectMenu.push(buttonCreate,buttonOpen,buttonSave, buttonImport, buttonExport)
+    arrSelectMenu.push(buttonCreate,buttonOpen,buttonSave)
 
     arrSelectMenu.forEach(element =>{
         divDropdownelement.appendChild(element)
@@ -91,7 +91,7 @@ function Menu(){
     buttonErase.id = "inpEraseLine";
     buttonErase.classList ="style-button-menu-svg"
     componentMenuElements.push(buttonCursor,buttonLine, buttonCircle, 
-        buttonsQuare, buttonErase)
+        buttonsQuare)
     componentMenuElements.forEach(element =>{
         divCreateElementsSvg.appendChild(element)
     })
@@ -183,6 +183,13 @@ function Menu(){
     arrSettingElem.forEach((element)=>{
         divSettingElement.appendChild(element)
     })
+
+    // ______________________Menu scale svg________________________
+    let lblScaleWidth = document.createElement('lable')
+    let inpScaleWidth = document.createElement('input')
+
+    let lblScaleHight = document.createElement('lable')
+    let inpScaleHight = document.createElement('input')
 
 
 

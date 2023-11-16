@@ -1,72 +1,117 @@
 function SvgCreateArea(){
     var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.setAttribute('style', 'border: 1px solid black');
-    svg.setAttribute('width', '1800');
-    svg.setAttribute('height', '650');
+    svg.setAttribute('xmlns','http://www.w3.org/2000/svg')
+    svg.setAttribute('width', '97%');
+    svg.setAttribute('height', '90vh');
     svg.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink", "http://www.w3.org/1999/xlink");
-    svg.setAttribute('class', 'sContent')
-    return svg
+    svg.setAttribute('class', 'sContentArea')
+
+    var g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    g.setAttribute('id', "SContent")
+    svg.appendChild(g)
     
+    return svg
 }
 
+function CreateGroupElements(){
+    var g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    g.setAttribute('class', "layer")
+    return g
+}
 
-function CreateLineSVG(id,x1, y1, x2, y2, color,size){
-  console.log("Click create Line")
-  var line = document.createElementNS('http://www.w3.org/2000/svg','line')
-  line.setAttribute("id", id);
-  line.setAttribute("x1", x1);
-  line.setAttribute("y1", y1);
-  line.setAttribute("x2", x2);
-  line.setAttribute("y2", y2);
-  line.setAttribute("stroke", color);
-  line.setAttribute("stroke-width", size);
+// Draw  elements BASE
+function drawLine(id){
+  let line = document.createElementNS('http://www.w3.org/2000/svg','path')
+  line.setAttribute("id", id)
+  line.setAttribute('stroke', 'black')
+  line.setAttribute('fill', 'transparent')
   return line
 }
 
-function ShadowLineSvg(x1, y1, x2, y2){
-  console.log('Draw shadow line')
-  var line = document.createElementNS('http://www.w3.org/2000/svg','line')
-  line.setAttribute('class', 'tmpShadowSvg')  
-  line.setAttribute("x1", x1);
-  line.setAttribute("y1", y1);
-  line.setAttribute("x2", x2);
-  line.setAttribute("y2", y2);
-  line.setAttribute("stroke", 'red');
-  line.setAttribute("stroke-opacity", '0.3');
-  line.setAttribute("stroke-dasharray", '5 5');
-  line.setAttribute("stroke-width", '1');
-  
-  return line
+
+
+
+function CreateSelectorCircle(id, cx, cy){
+  let selectCircle = document.createElementNS('http://www.w3.org/2000/svg','circle')
+  selectCircle.setAttribute("id", id)
+  selectCircle.setAttribute("cx", cx)
+  selectCircle.setAttribute("cy", cy)
+  selectCircle.setAttribute("r", "4")
+  selectCircle.setAttribute("stroke-width", "2")
+  selectCircle.setAttribute("fill", "#22C")
+  return selectCircle
 }
 
-function CreateCircleSVG(id,x1, y1, x2,y2, color, size, bg){
-  console.log("Click create circle")
-  var circle = document.createElementNS('http://www.w3.org/2000/svg','circle')
-  circle.setAttribute("id", id);
-  circle.setAttribute("cx", x1);
-  circle.setAttribute("cy", y1);
-  circle.setAttribute("r", Math.sqrt(Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2)));
-  circle.setAttribute("stroke", color);
-  circle.setAttribute("stroke-width", size);
-  circle.setAttribute("fill", bg);
+function selectArea(draw,x1, y1, x2, y2, type){
+  let rect = draw
+  rect.setAttribute("stroke", "#22C");
+  rect.setAttribute("stroke-width", "0.5");
+  rect.setAttribute("stroke-dasharray", "5,5")
+  switch (type){
+    case 'line':
+        rect.setAttribute('d', 'M'+ x1 + ' ' + y1 + " H " + x2 + " V " + y2 + " H " + x1 + " V " + y1);
+        break;
+    case 'circle':
+        rect.setAttribute('d', 'M'+ x1 + ' ' + y1 + " L " + (x2) + " " + (y2));
+        break;
+    case 'rect':
+        rect.setAttribute('d', 'M'+ x1 + ' ' + y1 + " L " + (x2) + " " + (y2));
+        break;
+  } 
   
-  return circle
+   
+  return rect
+}
+
+function groupSelect(type,x1,y1,x2,y2){
+  console.log("Element: ",type," X1: ", x1," Y1: ", y1 ," X2: ",x2 ," Y2: ", y2)
+  let x, y, width, height;
+  switch (type){
+      case 'line':
+          if(x1<x2 && y1<y2){width = x2-x1;height = y2-y1;x = x1;y = y1;}
+          else if(x1<x2 && y1>y2){width = x2-x1; height = y1-y2;x = x1 ;y = y1 - height;}
+          else if(x1>x2 && y1>y2){width = x1-x2;height = y1-y2;x = x1-width;y = y2;}
+          else if(x1>x2 && y1<y2){width = x1-x2;height = y2-y1;x = x1 - width;y = y1;}
+          break;
+      case 'circle':
+          let r = Math.sqrt(Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2))
+          if(x1<x2 && y1<y2){width = 2*r;height = 2*r;x = x1 - width/2;y = y1 - height/2 ;}
+          else if(x1<x2 && y1>y2){width = 2*r; height = 2*r;x = x1 - width/2 ;y = y1 - height/2;}
+          else if(x1>x2 && y1>y2){width = 2*r;height = 2*r;x = x1 - width/2;y = y1 - height/2;}
+          else if(x1>x2 && y1<y2){width = 2*r;height = 2*r;x = x1 - width/2;y = y1-height/2;}
+          break;
+      case 'rect':
+          if(x1 < x2 && y1 < y2){width = x2-x1;height=y2-y1; x=x1; y=y1}
+          else if(x1 < x2 && y1 > y2){width=x2-x1;height=y1-y2; x=x1; y=y1-height}
+          else if(x1>x2 && y1>y2){width=x1-x2;height=y1-y2; x=x1-width;y=y1-height}
+          else if(x1>x2 && y1<y2){width=x1-x2;height=y2-y1; x=x1-width; y=y1}
+          break;
+  }   
+
+  
+  let groupSelect = CreateGroupElements('noneGroup')
+  // let selectRect = CreateSelectorRect('SelecetRect', x, y, width, height)
+  // console.log("X: ", x," Y: ", y ," WIDTH: ",width ," HEIGHT: ", height)
+  let grouSelectCircle = CreateGroupElements()
+  let selectCircleNW = CreateSelectorCircle('selectorCircle_nw', x, y)
+  let selectCircleN = CreateSelectorCircle('selectorCircle_n', x+width/2 , y)
+  let selectCircleNE = CreateSelectorCircle('selectorCircle_ne', x+width, y)
+  let selectCircleE = CreateSelectorCircle('selectorCircle_e', x+width, y+height/2)
+  let selectCircleSE = CreateSelectorCircle('selectorCircle_se', x+width, y+height)
+  let selectCircleS = CreateSelectorCircle('selectorCircle_s', x+width/2, y+height)
+  let selectCircleSW = CreateSelectorCircle('selectorCircle_sw', x, y+height)
+  let selectCircleW = CreateSelectorCircle('selectorCircle_w', x, y+height/2)
+  let selectCircleArr = [selectCircleNW,selectCircleN,selectCircleNE,
+                          selectCircleE,selectCircleSE ,selectCircleS,
+                          selectCircleSW,selectCircleW]
+  selectCircleArr.forEach((element)=>{grouSelectCircle.appendChild(element)})
+  // groupSelect.appendChild(selectRect)
+  groupSelect.appendChild(grouSelectCircle)
+  return groupSelect
 }
 
 
-function CreateSquareSVG(id, x1, y1, x2,y2, color, size, bg){
-  console.log("Click create Square")
-  var square = document.createElementNS('http://www.w3.org/2000/svg','rect')
-  square.setAttribute("id", id);
-  if(x1 < x2 ){square.setAttribute("x", x1);}else{square.setAttribute("x", x1-Math.abs(x2-x1));}
-  if(y1 < y2){square.setAttribute("y",y1)}else{square.setAttribute("y",y1-Math.abs(y2-y1));}
-  square.setAttribute("width", Math.abs(x2-x1));
-  square.setAttribute("height", Math.abs(y2-y1));
-  square.setAttribute("stroke", color);
-  square.setAttribute("stroke-width", size);
-  square.setAttribute("fill",  bg);
-  
-  return square
-}
 
-export {SvgCreateArea,CreateLineSVG,CreateCircleSVG,CreateSquareSVG, ShadowLineSvg}
+export {SvgCreateArea,drawLine,selectArea,
+    CreateGroupElements, CreateSelectorCircle, groupSelect}
