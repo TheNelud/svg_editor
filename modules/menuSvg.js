@@ -90,7 +90,11 @@ function Menu(){
     buttonErase.type = "button";
     buttonErase.id = "inpEraseLine";
     buttonErase.classList ="style-button-menu-svg"
-    componentMenuElements.push(buttonCursor,buttonLine, buttonCircle, 
+    const buttonText = document.createElement("input");
+    buttonText.type = "button";
+    buttonText.id = "inpTextLine";
+    buttonText.classList ="style-button-menu-svg"
+    componentMenuElements.push(buttonCursor,buttonLine, buttonText,buttonCircle, 
         buttonsQuare)
     componentMenuElements.forEach(element =>{
         divCreateElementsSvg.appendChild(element)
@@ -185,6 +189,22 @@ function Menu(){
     })
 
     // ______________________Menu scale svg________________________
+    let divScale = document.createElement('div')
+    divScale.className = 'divScale'
+    let lblScale = document.createElement('label')
+    lblScale.id = 'lblScale'
+    lblScale.textContent = 'Маштаб: '
+    let inpScale = document.createElement('input')
+    inpScale.type = "range";
+    inpScale.id = "inpScaleSlider";
+    inpScale.max = 10000
+    inpScale.min = 1200
+    inpScale.value = 2000
+
+    divScale.appendChild(lblScale)
+    divScale.appendChild(inpScale)
+    
+
     let lblScaleWidth = document.createElement('lable')
     let inpScaleWidth = document.createElement('input')
 
@@ -194,7 +214,7 @@ function Menu(){
 
 
     // ___________________________________________________________
-    componentMenu.push(divSettingElement,div_dropdowmenu, divCreateElementsSvg, div_editmenu)
+    componentMenu.push(divSettingElement,div_dropdowmenu, divCreateElementsSvg, div_editmenu,divScale)
 
     componentMenu.forEach(element => {
         divMenuSvg.appendChild(element)

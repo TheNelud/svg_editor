@@ -1,8 +1,16 @@
-
+body{
+  overflow-y: hidden;
+}
 #areaSvgWorkZone{
     position: relative;
     top:45px;
-    left:45px
+    left:45px;
+    width: 97%;
+    height: 90vh;
+    overflow-x: scroll;
+    overflow-y: scroll;
+    border: 1px solid;
+    
 }
 /* dropdow menu main */
 .dropbtn {
@@ -66,6 +74,7 @@
 #inpCreateCircle{background-image: url('./modules/images/circle.svg');}
 #inpCreateSquare{background-image: url('./modules/images/square.svg');}
 #inpEraseLine{background-image: url('./modules/images/eraser.svg');}
+#inpTextLine{background-image: url('./modules/images/text.svg');}
 
 .style-button-menu-svg:hover{
     border: 1px;
@@ -133,4 +142,15 @@ input[type="color"]::moz-color-swatch {
 
 .selected-element-svg{
   outline: 3px dotted #0600ff3d
+}
+
+/* Scale */
+.divScale{
+  position: absolute;
+  background: rgb(192, 192, 192);
+  bottom: 5px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  border-bottom-left-radius: 10px;
 }

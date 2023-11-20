@@ -1,6 +1,6 @@
 import {Menu} from './modules/menuSvg.js'
 import * as elemSvg from './modules/elementsSvg.js'
-import {eventDraw, eventSelect} from './modules/eventsElementsSvg.js'
+import {eventDraw, selectElement} from './modules/eventsElementsSvg.js'
 
 document.getElementById("areaSvgMenu").appendChild(Menu())
 
@@ -12,6 +12,8 @@ const btnSaveSvg = document.getElementById('inpSaveSvg')
 
 btnCreateSvgArea.onclick = function(){
   document.getElementById("areaSvgWorkZone").appendChild(elemSvg.SvgCreateArea())
+  let svg = document.getElementById("areaSvgWorkZone").childNodes[0]
+  svg.setAttribute("class", "sContentArea_create")
 }
 
 
@@ -32,15 +34,13 @@ btnOpenSvg.onclick = async function(){
   const [fileHandle] = await window.showOpenFilePicker(options)
   const file = await fileHandle.getFile()
   const fileContent = await file.text()
-
-  console.log(fileContent)
   document.getElementById("areaSvgWorkZone").innerHTML = fileContent
 
   let svg = document.getElementById("areaSvgWorkZone").childNodes[2]
-  svg.setAttribute("class", "sContentArea")
-  svg.setAttribute('style', 'border: 1px solid black');
-  svg.setAttribute('width', '97%');
-  svg.setAttribute('height', '90vh');
+  svg.setAttribute("class", "sContentArea_load")
+
+  // svg.setAttribute('width', '97%');
+  // svg.setAttribute('height', '90vh');
   
 }
 
@@ -63,8 +63,11 @@ btnSaveSvg.onclick = async function(){
   }
   // данные для записи
   let dataSting = "Text"
+  let svg = document.getElementById('areaSvgWorkZone').childNodes[2]
+  console.log(svg)
+  svg.setAttribute("style", 'border:none')
   let data = document.getElementById('areaSvgWorkZone').innerHTML
-  console.log(data)
+ 
 
   const fileHandle = await window.showSaveFilePicker(options)
   const writableStream = await fileHandle.createWritable()
@@ -107,7 +110,8 @@ btnCreateCircle.onclick = function(){
 }
 
 btnSelectCursor.onclick = function(){
-  eventDraw('select')
+  // eventDraw('select')
+  selectElement()
 }
 
 document.querySelector('.dropbtn').addEventListener('click',()=>{
@@ -128,4 +132,18 @@ window.onclick = function(event) {
   }
 
 
+let scale_svg = document.getElementById('inpScaleSlider')
 
+scale_svg.onchange = function(){
+  let svg = document.getElementById("areaSvgWorkZone").childNodes[2]
+  
+  console.log(svg.getAttribute('viewBox'))
+  let param = svg.getAttribute('viewBox').split(' ')
+  // let WBoxMax =  
+  // let scaleX = Number(param[2]) * scale_svg.value
+  // let scaleY = Number(param[3]) * scale_svg.value
+  // console.log(scale)
+
+  svg.setAttribute("width", scale_svg.value)
+  svg.setAttribute("hieght", param[3])
+}
