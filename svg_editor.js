@@ -9,15 +9,25 @@ const btnCreateSvgArea = document.getElementById('inpSvgCreateArea')
 const btnOpenSvg = document.getElementById('inpOpenSvg')
 const btnSaveSvg = document.getElementById('inpSaveSvg')
 
-
+// Button Create Area
 btnCreateSvgArea.onclick = function(){
-  document.getElementById("areaSvgWorkZone").appendChild(elemSvg.SvgCreateArea())
-  let svg = document.getElementById("areaSvgWorkZone").childNodes[0]
-  svg.setAttribute("class", "sContentArea_create")
+  let AreaWork = document.getElementById("areaSvgWorkZone")
+  
+  AreaWork.innerHTML = "<!--?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?-->"
+  AreaWork.appendChild(elemSvg.SvgCreateArea())
+  let svg = AreaWork.childNodes
+  svg.forEach(element =>{
+    if(element.nodeName === 'svg'){
+      console.log(element)
+      element.setAttribute("class", "sContentArea")
+    }
+  })
+  // console.log(svg)
+  // svg.setAttribute("class", "sContentArea")
 }
 
 
-
+// Button Open Area
 btnOpenSvg.onclick = async function(){
   const options = {
     multiple: false,
@@ -36,12 +46,13 @@ btnOpenSvg.onclick = async function(){
   const fileContent = await file.text()
   document.getElementById("areaSvgWorkZone").innerHTML = fileContent
 
-  let svg = document.getElementById("areaSvgWorkZone").childNodes[2]
-  svg.setAttribute("class", "sContentArea_load")
-
-  // svg.setAttribute('width', '97%');
-  // svg.setAttribute('height', '90vh');
-  
+  let svg = document.getElementById("areaSvgWorkZone").childNodes
+  svg.forEach(element =>{
+    if(element.nodeName === 'svg'){
+      element.setAttribute("class", "sContentArea")
+    }
+  })
+  // svg.setAttribute("class", "sContentArea")  
 }
 
 
@@ -63,9 +74,13 @@ btnSaveSvg.onclick = async function(){
   }
   // данные для записи
   let dataSting = "Text"
-  let svg = document.getElementById('areaSvgWorkZone').childNodes[2]
-  console.log(svg)
-  svg.setAttribute("style", 'border:none')
+  let svg = document.getElementById('areaSvgWorkZone').childNodes
+  svg.forEach(element =>{
+    if(element.nodeName === 'svg'){
+      element.setAttribute("style", 'border:none')
+    }
+  })
+
   let data = document.getElementById('areaSvgWorkZone').innerHTML
  
 

@@ -1,15 +1,20 @@
 function SvgCreateArea(){
     var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    svg.setAttribute('style', 'border: 1px solid black');
-    svg.setAttribute('xmlns','http://www.w3.org/2000/svg')
-    svg.setAttribute('width', '97%');
-    svg.setAttribute('height', '90vh');
     svg.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink", "http://www.w3.org/1999/xlink");
-    svg.setAttribute('class', 'sContentArea')
+    svg.setAttribute('xmlns','http://www.w3.org/2000/svg')
+    svg.setAttribute('viewBox', '0 0 1800 900');
+    svg.setAttribute('style', 'border: 1px solid black');
+    
+    var gSContent = document.createElementNS("http://www.w3.org/2000/svg", "g");
+    gSContent.setAttribute('id', "SContent")
 
-    var g = document.createElementNS("http://www.w3.org/2000/svg", "g");
-    g.setAttribute('id', "SContent")
-    svg.appendChild(g)
+    var gLevelFirst = document.createElementNS("http://www.w3.org/2000/svg", "g");
+
+    var gLevelContent = document.createElementNS("http://www.w3.org/2000/svg", "g");
+
+    gLevelFirst.appendChild(gLevelContent)
+    gSContent.appendChild(gLevelFirst)
+    svg.appendChild(gSContent)
     
     return svg
 }
@@ -21,9 +26,8 @@ function CreateGroupElements(){
 }
 
 // Draw  elements BASE
-function drawLine(id){
+function drawLine(){
   let line = document.createElementNS('http://www.w3.org/2000/svg','path')
-  line.setAttribute("id", id)
   line.setAttribute('stroke', 'black')
   line.setAttribute('fill', 'transparent')
   return line

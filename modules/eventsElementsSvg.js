@@ -71,21 +71,10 @@ function selectElement(){
                         y = inputY1.value
                         LowLevelSContent[i].setAttribute("transform", "matrix("+String(a)+","+String(b)+","+String(c)+","+String(d)+","+String(x)+","+String(y)+")")
                     }
-
-                    LowLevelSContent[i].onmousemove = function(event){
-                        console.log("X-move: ", event.pageX + rect.left, " Y-move: ", event.pageY - rect.top);
-                        // x = event.pageX - rect.left
-                        // y = event.pageY - rect.top
-                        LowLevelSContent[i].setAttribute("transform", "matrix("+String(a)+","+String(b)+","+String(c)+","+String(d)+","+String(x)+","+String(y)+")")
-                    }
                 }
             }
         }
-
     }
-    
-    
-
 }
 
 
@@ -114,6 +103,8 @@ function eventDraw(type) {
     console.log(type)  
     let sContent = document.querySelector('.sContentArea');
     let sContentID = document.getElementById('SContent')
+    let gLevelContent = sContentID.childNodes[0].childNodes[0]
+    console.log(gLevelContent)
     
     let rect = sContent.getBoundingClientRect()
     let startDraw, moveDraw, endDraw;
@@ -134,122 +125,63 @@ function eventDraw(type) {
     const btnEditColor = document.getElementById('inpEditColor');
     const btnEditBackground = document.getElementById('inpEditBackground');
 
+    sContent.onmousedown = function(event){
+        startDraw = {
+            x: event.pageX - rect.left,
+            y: event.pageY - rect.top
+        }
+        newLine = elemSvg.drawLine()
+        newAreaSelect = elemSvg.drawLine()
+        console.log("Start: ", startDraw)
 
-    
-    if(type === 'select'){
-        console.log("ТУТА")
-        let getElement,defultStroke ,dataElement
-        let x,y,r
-        let x1,y1,x2,y2
+        let gElement = document.createElementNS("http://www.w3.org/2000/svg", "g")
+        gElement.setAttribute("v:mid", addID_Element())
+        gElement.setAttribute("transform", "matrix(1,0,0,1,0,0)")
+
         
-        sContentID.onmouseover = function(event){
-            console.log("ТУТА2")
-            if (event.target.id){
-                getElement = document.getElementById(event.target.id)
-                defultStroke = getElement.getAttribute('stroke')
-                getElement.setAttribute('stroke', '#20F')
-            }
-        }
-        sContentID.onmouseout = function(){
-            // sContentID.onmouseover = null
-            getElement.setAttribute('stroke', defultStroke)
-        }
-        
-        
-    }else{
-        sContent.onmousedown = function(event){
-            startDraw = {
+        sContent.onmousemove = function(event){
+            moveDraw = {
                 x: event.pageX - rect.left,
                 y: event.pageY - rect.top
             }
-            newLine = elemSvg.drawLine(addID_Element())
-            newAreaSelect = elemSvg.drawLine()
-            console.log("Start: ", startDraw)
 
+            switch(type){
+                case 'line': 
+                    newLine.setAttribute('d', 'M'+ startDraw.x + ' ' + startDraw.y + " L " + moveDraw.x + ' ' + moveDraw.y );
+                    elemSvg.selectArea(newAreaSelect, startDraw.x, startDraw.y,  moveDraw.x, moveDraw.y, type)
+                    break;
+                case 'rect': 
+                    newLine.setAttribute('d', 'M'+ startDraw.x + ' ' + startDraw.y + " H " + moveDraw.x + " V " + moveDraw.y + " H " + startDraw.x + " V " + startDraw.y);
+                    elemSvg.selectArea(newAreaSelect, startDraw.x, startDraw.y,  moveDraw.x, moveDraw.y, type)
+                    break;
+                case 'circle': 
+                    let r = Math.sqrt(Math.pow((startDraw.x - moveDraw.x), 2) + Math.pow((startDraw.y - moveDraw.y), 2));
+                    newLine.setAttribute('d', 'M'+ startDraw.x + ' ' + startDraw.y + " m " + r + ", 0 "+ " a "+ r +","+ r+ " 0 1,1 " + (-(r * 2))+" ,0 a" + r+ ","+r +" 0 1,1 "+ (r*2)+" ,0" );
+                    elemSvg.selectArea(newAreaSelect, startDraw.x, startDraw.y,  moveDraw.x, moveDraw.y, type)
+                    break;
+            }
             
-            sContent.onmousemove = function(event){
-                moveDraw = {
-                    x: event.pageX - rect.left,
-                    y: event.pageY - rect.top
-                }
+            sContent.appendChild(newLine)
 
-                switch(type){
-                    case 'line': 
-                        newLine.setAttribute('d', 'M'+ startDraw.x + ' ' + startDraw.y + " L " + moveDraw.x + ' ' + moveDraw.y );
-                        elemSvg.selectArea(newAreaSelect, startDraw.x, startDraw.y,  moveDraw.x, moveDraw.y, type)
-                        break;
-                    case 'rect': 
-                        newLine.setAttribute('d', 'M'+ startDraw.x + ' ' + startDraw.y + " H " + moveDraw.x + " V " + moveDraw.y + " H " + startDraw.x + " V " + startDraw.y);
-                        elemSvg.selectArea(newAreaSelect, startDraw.x, startDraw.y,  moveDraw.x, moveDraw.y, type)
-                        break;
-                    case 'circle': 
-                        let r = Math.sqrt(Math.pow((startDraw.x - moveDraw.x), 2) + Math.pow((startDraw.y - moveDraw.y), 2));
-                        newLine.setAttribute('d', 'M'+ startDraw.x + ' ' + startDraw.y + " m " + r + ", 0 "+ " a "+ r +","+ r+ " 0 1,1 " + (-(r * 2))+" ,0 a" + r+ ","+r +" 0 1,1 "+ (r*2)+" ,0" );
-                        elemSvg.selectArea(newAreaSelect, startDraw.x, startDraw.y,  moveDraw.x, moveDraw.y, type)
-                        break;
-                }
-                
-                sContent.appendChild(newLine)
-                sContentID.appendChild(newLine)
-                sContent.appendChild(newAreaSelect)
-                console.log("Move: ", moveDraw)
-                console.log(newLine)
-            }
-        }
-        
-        sContent.onmouseup = function(event){
-            endDraw = {
-                x: event.pageX - rect.left,
-                y: event.pageY - rect.top
-            }
-            console.log("End: ", endDraw)
-            sContent.removeChild(newAreaSelect)
-            sContent.onmousemove = null
-        }
-    }
-}
+            gElement.appendChild(newLine)
+           
+            gLevelContent.appendChild(gElement)
 
-
-
-
-function eventSelect(){
-    console.log("SELECT EVENT")
-    
-    let sContent = document.querySelector('.sContent')
-    
-
-    
-
-    let defultStroke, defultStrokeWidth;
-    let selectedID;
-
-   
-
-    sContent.onmouseout = function(event){
-        if (event.target.id){
-            console.log(event.target.id);
-            let getElement = sContent.getElementById(event.target.id)
-            getElement.setAttribute('stroke',defultStroke)
-            getElement.setAttribute('stroke-width', defultStrokeWidth)
+            sContent.appendChild(newAreaSelect)
+            console.log("Move: ", moveDraw)
+            console.log(newLine)
         }
     }
     
-    
-        
-
-
-
-
-   
-    
-
-   
-
-    
-
-
-    
+    sContent.onmouseup = function(event){
+        endDraw = {
+            x: event.pageX - rect.left,
+            y: event.pageY - rect.top
+        }
+        console.log("End: ", endDraw)
+        sContent.removeChild(newAreaSelect)
+        sContent.onmousemove = null
+    }
 }
 
-
-export {eventDraw,eventSelect, selectElement}
+export {eventDraw,selectElement}
